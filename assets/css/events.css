@@ -60,20 +60,10 @@
 }
 
 /* Light Mode Adjustments - Simplified */
-body.light-mode .prefecture {
-  stroke: #ff8c00;
-  /* Specific region fills will override this due to ID selector below */
-  fill: transparent; /* Default fallback */
-}
+/* Removed generic overrides that caused single-color issue in light mode */
+/* body.light-mode .prefecture { ... } removed to let region colors apply */
 
-body.light-mode .prefecture-visited {
-  fill: #ff8c00;
-}
-
-body.light-mode .prefecture-visited:hover {
-  fill: #ff6600;
-  filter: drop-shadow(0 0 12px #ff6600);
-}
+/* Visited state should also use region colors (handled by specific rules) */
 
 /* Map Legend */
 .map-legend {
@@ -238,69 +228,99 @@ body.light-mode .event-desc {
   }
 }
 
-/* Region Colors */
+/* Region Colors - Japanese Traditional Colors Palette */
 :root {
-  --color-hokkaido: #4facfe;
-  --color-tohoku: #00f2fe;
-  --color-kanto: #43e97b;
-  --color-chubu: #fa709a;
-  --color-kansai: #fee140;
-  --color-chugoku: #f83600;
-  --color-shikoku: #a8edea;
-  --color-kyushu: #ff9a9e;
-  --color-okinawa: #30cfd0;
+  /* Avoid Neon colors, use Pastel/Traditional */
+  --color-hokkaido: #59b9c6; /* Mizu-asagi (Pale Blue-Green) */
+  --color-tohoku:   #006e54; /* Moegi (Deep Green) */
+  --color-kanto:    #c3d825; /* Wakakusa (Bright Yellow-Green) */
+  --color-chubu:    #bbbcde; /* Fuji (Wisteria Purple) */
+  --color-kansai:   #b7282e; /* Akane (Madder Red) */
+  --color-chugoku:  #bf783a; /* Kohaku (Amber) */
+  --color-shikoku:  #726d40; /* Miru (Olive Green) */
+  --color-kyushu:   #eebbcb; /* Nadeshiko (Pink) */
+  --color-okinawa:  #f2a0a1; /* Kobai (Red Plum) */
 }
 
 body.light-mode {
-  --color-hokkaido: #007bff;
-  --color-tohoku: #00bcd4;
-  --color-kanto: #28a745;
-  --color-chubu: #e83e8c;
-  --color-kansai: #ffc107;
-  --color-chugoku: #dc3545;
-  --color-shikoku: #17a2b8;
-  --color-kyushu: #fd7e14;
-  --color-okinawa: #20c997;
+  /* Light Mode Specific Adjustments (Slightly darker/saturated for visibility on white) */
+  --color-hokkaido: #2ca9e1; /* Mizu-asagi (Slightly darker) */
+  --color-tohoku:   #00552e; /* Moegi (Darker) */
+  --color-kanto:    #86c166; /* Wakakusa (Darker/Moegi-like) - Actually #86c166 is Moegi-ish */ 
+  /* Let's stick to readable versions on white */
+  --color-kanto:    #7b90d2; /* Fuji? No Kanto is Green. */
+  --color-kanto:    #69b076; /* Green */
+  --color-chubu:    #8b81c3; /* Fuji (Darker Purple) */
+  --color-kansai:   #bd1e48; /* Akane (Darker) */
+  --color-chugoku:  #9d5b25; /* Kohaku (Darker Brown) */
+  --color-shikoku:  #5f5d36; /* Miru (Darker) */
+  --color-kyushu:   #e597b2; /* Nadeshiko (Darker Pink) */
+  --color-okinawa:  #e95295; /* Kobai (Darker/Saturated) */
 }
 
-/* Region Colors - Unified (User Requested) - REMOVED */
-/* Reverting to original region colors defined below/above */
+/* Region Specific Styling for Dots */
+/* Supports both .region-id (lowercase) and .region-Id (Capitalized) */
 
-/* Old Region Colors (Disabled/Unused) */
-/* Region-specific fills */
-/* Region-specific fills - Higher Specificity with ID */
-#japan-map .prefecture.region-hokkaido { stroke: var(--color-hokkaido); fill: var(--color-hokkaido); fill-opacity: 0.3; }
-#japan-map .prefecture.region-hokkaido:hover { fill-opacity: 1; filter: drop-shadow(0 0 8px var(--color-hokkaido)); }
+/* Hokkaido */
+.prefecture.region-hokkaido, .prefecture.region-Hokkaido { stroke: var(--color-hokkaido); }
+.prefecture.region-hokkaido:hover, .prefecture.region-Hokkaido:hover { fill: var(--color-hokkaido); filter: drop-shadow(0 0 8px var(--color-hokkaido)); }
 
-#japan-map .prefecture.region-tohoku { stroke: var(--color-tohoku); fill: var(--color-tohoku); fill-opacity: 0.3; }
-#japan-map .prefecture.region-tohoku:hover { fill-opacity: 1; filter: drop-shadow(0 0 8px var(--color-tohoku)); }
+/* Tohoku */
+.prefecture.region-tohoku, .prefecture.region-Tohoku { stroke: var(--color-tohoku); }
+.prefecture.region-tohoku:hover, .prefecture.region-Tohoku:hover { fill: var(--color-tohoku); filter: drop-shadow(0 0 8px var(--color-tohoku)); }
 
-#japan-map .prefecture.region-kanto { stroke: var(--color-kanto); fill: var(--color-kanto); fill-opacity: 0.3; }
-#japan-map .prefecture.region-kanto:hover { fill-opacity: 1; filter: drop-shadow(0 0 8px var(--color-kanto)); }
+/* Kanto */
+.prefecture.region-kanto, .prefecture.region-Kanto { stroke: var(--color-kanto); }
+.prefecture.region-kanto:hover, .prefecture.region-Kanto:hover { fill: var(--color-kanto); filter: drop-shadow(0 0 8px var(--color-kanto)); }
 
-#japan-map .prefecture.region-chubu { stroke: var(--color-chubu); fill: var(--color-chubu); fill-opacity: 0.3; }
-#japan-map .prefecture.region-chubu:hover { fill-opacity: 1; filter: drop-shadow(0 0 8px var(--color-chubu)); }
+/* Chubu */
+.prefecture.region-chubu, .prefecture.region-Chubu { stroke: var(--color-chubu); }
+.prefecture.region-chubu:hover, .prefecture.region-Chubu:hover { fill: var(--color-chubu); filter: drop-shadow(0 0 8px var(--color-chubu)); }
 
-#japan-map .prefecture.region-kansai { stroke: var(--color-kansai); fill: var(--color-kansai); fill-opacity: 0.3; }
-#japan-map .prefecture.region-kansai:hover { fill-opacity: 1; filter: drop-shadow(0 0 8px var(--color-kansai)); }
+/* Kansai */
+.prefecture.region-kansai, .prefecture.region-Kansai { stroke: var(--color-kansai); }
+.prefecture.region-kansai:hover, .prefecture.region-Kansai:hover { fill: var(--color-kansai); filter: drop-shadow(0 0 8px var(--color-kansai)); }
 
-#japan-map .prefecture.region-chugoku { stroke: var(--color-chugoku); fill: var(--color-chugoku); fill-opacity: 0.3; }
-#japan-map .prefecture.region-chugoku:hover { fill-opacity: 1; filter: drop-shadow(0 0 8px var(--color-chugoku)); }
+/* Chugoku */
+.prefecture.region-chugoku, .prefecture.region-Chugoku { stroke: var(--color-chugoku); }
+.prefecture.region-chugoku:hover, .prefecture.region-Chugoku:hover { fill: var(--color-chugoku); filter: drop-shadow(0 0 8px var(--color-chugoku)); }
 
-#japan-map .prefecture.region-shikoku { stroke: var(--color-shikoku); fill: var(--color-shikoku); fill-opacity: 0.3; }
-#japan-map .prefecture.region-shikoku:hover { fill-opacity: 1; filter: drop-shadow(0 0 8px var(--color-shikoku)); }
+/* Shikoku */
+.prefecture.region-shikoku, .prefecture.region-Shikoku { stroke: var(--color-shikoku); }
+.prefecture.region-shikoku:hover, .prefecture.region-Shikoku:hover { fill: var(--color-shikoku); filter: drop-shadow(0 0 8px var(--color-shikoku)); }
 
-#japan-map .prefecture.region-kyushu { stroke: var(--color-kyushu); fill: var(--color-kyushu); fill-opacity: 0.3; }
-#japan-map .prefecture.region-kyushu:hover { fill-opacity: 1; filter: drop-shadow(0 0 8px var(--color-kyushu)); }
+/* Kyushu */
+.prefecture.region-kyushu, .prefecture.region-Kyushu { stroke: var(--color-kyushu); }
+.prefecture.region-kyushu:hover, .prefecture.region-Kyushu:hover { fill: var(--color-kyushu); filter: drop-shadow(0 0 8px var(--color-kyushu)); }
 
-#japan-map .prefecture.region-okinawa { stroke: var(--color-okinawa); fill: var(--color-okinawa); fill-opacity: 0.3; }
-#japan-map .prefecture.region-okinawa:hover { fill-opacity: 1; filter: drop-shadow(0 0 8px var(--color-okinawa)); }
+/* Okinawa */
+.prefecture.region-okinawa, .prefecture.region-Okinawa { stroke: var(--color-okinawa); }
+.prefecture.region-okinawa:hover, .prefecture.region-Okinawa:hover { fill: var(--color-okinawa); filter: drop-shadow(0 0 8px var(--color-okinawa)); }
 
-/* Zoom States */
-.prefecture.faded {
-  opacity: 0.1;
-  pointer-events: none;
+/* Bubble Specific Coloring - REMOVED */
+/* User requested bubbles to use Theme Color (Accent), while Dots use Region Color */
+/* .map-speech-bubble defaults to var(--accent-color) which is Cyan (Dark) / Orange (Light) */
+
+/* Visited Spot Override - Use Region Fill */
+/* We want visited spots to be FILLED with their region color */
+/* Since they already have specific region classes, we just need to target .spot-visited combined with region class? */
+/* Or just generic .spot-visited sets fill to CURRENT stroke color? */
+#japan-map .prefecture.spot-visited {
+  fill: currentColor; /* Does not work for stroke color inheritance usually */
+  /* We need specific rules or rely on generic override if we can't map stroke to fill easily in CSS without var */
 }
+
+/* Because .prefecture.region-X sets 'stroke', we can use that variable for fill if we repeat the selector or add a generic rule using style attribute? */
+/* For now, let's explicitly add fill rules for visited status per region */
+.prefecture.region-hokkaido.spot-visited, .prefecture.region-Hokkaido.spot-visited { fill: var(--color-hokkaido); }
+.prefecture.region-tohoku.spot-visited,   .prefecture.region-Tohoku.spot-visited   { fill: var(--color-tohoku); }
+.prefecture.region-kanto.spot-visited,    .prefecture.region-Kanto.spot-visited    { fill: var(--color-kanto); }
+.prefecture.region-chubu.spot-visited,    .prefecture.region-Chubu.spot-visited    { fill: var(--color-chubu); }
+.prefecture.region-kansai.spot-visited,   .prefecture.region-Kansai.spot-visited   { fill: var(--color-kansai); }
+.prefecture.region-chugoku.spot-visited,  .prefecture.region-Chugoku.spot-visited  { fill: var(--color-chugoku); }
+.prefecture.region-shikoku.spot-visited,  .prefecture.region-Shikoku.spot-visited  { fill: var(--color-shikoku); }
+.prefecture.region-kyushu.spot-visited,   .prefecture.region-Kyushu.spot-visited   { fill: var(--color-kyushu); }
+.prefecture.region-okinawa.spot-visited,  .prefecture.region-Okinawa.spot-visited  { fill: var(--color-okinawa); }
 
 /* Spot Coloring (Specific Municipality/Location) - Overrides Region Colors */
 #japan-map .prefecture.spot-visited {
@@ -555,3 +575,177 @@ body.light-mode .label-text {
 body.light-mode .label-text:hover {
   fill: #ff8c00;
 }
+
+/* Map Speech Bubble - Adapted from style.css .speech-bubble */
+.map-speech-bubble {
+  position: relative; /* Static/Relative inside foreignObject */
+  /* Copied styles */
+  background: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  border: 2px solid var(--accent-color);
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  font-family: var(--font-code);
+  font-size: 0.95rem;
+  min-width: max-content; /* Ensure text fits */
+  max-width: 300px;
+  text-align: center;
+  white-space: nowrap; /* Keep single line usually */
+  
+  /* Map interaction overrides */
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 10;
+  
+  /* Remove old override */
+  overflow: visible;
+  box-shadow: none; /* style.css has no shadow */
+}
+
+.map-speech-bubble:hover {
+  /* Mimic simple hover if any, style.css doesn't have specific hover for bubble itself except position on Rabbit image hover? */
+  /* Adding simple highlight for good UI */
+  background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-2px);
+  transition: all 0.2s;
+}
+
+/* Arrow Styles - Solid Triangles (Customizable via CSS Vars) */
+/* Defaults: Height (Length) 8px, Width 16px (Half 8px) */
+.map-speech-bubble::after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-color: transparent;
+  pointer-events: none;
+  
+  /* Use vars if defined, else fallback to 8px */
+  --th: var(--fo-tail-height, 8px);
+  --tw: var(--fo-tail-half-width, 8px);
+  --tsk: var(--fo-tail-skew, 0deg);
+}
+
+/* Default (Bottom Tail) -> Arrow on BOTTOM pointing DOWN */
+.map-speech-bubble::after, .map-speech-bubble.tail-bottom::after {
+  top: 100%;
+  left: 50%; 
+  margin-left: calc(var(--tw) * -1);
+  border-width: var(--th) var(--tw) 0 var(--tw); /* Top Right Bottom Left */
+  border-top-color: var(--accent-color);
+  
+  /* Skew logic for vertical tail */
+  transform: skewX(var(--tsk));
+  transform-origin: top center; /* Keep base attached */
+}
+
+/* Tail Top (Bubble Below Dot) -> Arrow on TOP pointing UP */
+.map-speech-bubble.tail-top::after {
+  top: auto;
+  bottom: 100%;
+  left: 50%;
+  margin-left: calc(var(--tw) * -1);
+  border-width: 0 var(--tw) var(--th) var(--tw);
+  border-bottom-color: var(--accent-color);
+  
+  transform: skewX(var(--tsk));
+  transform-origin: bottom center;
+}
+
+/* Tail Left (Bubble Right of Dot) -> Arrow on LEFT pointing LEFT */
+.map-speech-bubble.tail-left::after {
+  top: 50%;
+  left: auto;
+  right: 100%;
+  margin-left: 0;
+  margin-top: calc(var(--tw) * -1);
+  border-width: var(--tw) var(--th) var(--tw) 0; /* Right is Length */
+  border-right-color: var(--accent-color);
+  
+  /* Skew logic for horizontal tail */
+  transform: skewY(var(--tsk));
+  transform-origin: right center;
+}
+
+/* Tail Right (Bubble Left of Dot) -> Arrow on RIGHT pointing RIGHT */
+.map-speech-bubble.tail-right::after {
+  top: 50%;
+  left: 100%;
+  right: auto;
+  margin-left: 0;
+  margin-top: calc(var(--tw) * -1);
+  border-width: var(--tw) 0 var(--tw) var(--th); /* Left is Length */
+  border-left-color: var(--accent-color);
+  
+  transform: skewY(var(--tsk));
+  transform-origin: left center;
+}
+
+/* Remove ::before styles completely */
+.map-speech-bubble::before,
+.map-speech-bubble.tail-top::before,
+.map-speech-bubble.tail-left::before,
+.map-speech-bubble.tail-right::before {
+  content: none;
+  display: none;
+}
+
+/* Light Mode Overrides */
+/* style.css defines variables, so colors update automatically. 
+   But specific light mode overrides might be needed if contrast is bad. */
+body.light-mode .map-speech-bubble {
+  /* style.css doesn't have .speech-bubble overrides for light mode inside the block I saw,
+     but it uses var(--card-bg) etc? No, it uses hardcoded rgba(0,0,0,0.5).
+     The user might want it to stay dark always (like the rabbit)? 
+     User said "copy exactly". Rabbit bubble is dark even in light mode? */
+  /* I will trust variables for accent, but background is hardcoded in style.css */
+}
+
+/* Force accent color update for light mode if variables handle it (they do) */
+
+
+/* Regional font size overrides for speech bubbles - REMOVED */
+/* Scaling is now handled via SVG transform in japan-map.js */
+
+/* Map Pin Icon Styling (Vector) */
+svg.map-pin-svg {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  fill: rgba(255, 255, 255, 0.3); /* Unvisited default: semi-transparent white like original dots */
+  stroke: var(--accent-color);
+  stroke-width: 1px;
+}
+
+svg.map-pin-svg:hover {
+  fill: var(--accent-color);
+  transform: scale(1.3) translateY(-2px);
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+}
+
+svg.map-pin-svg.prefecture-visited {
+  fill: var(--accent-color); /* Visited: Solid accent color */
+  stroke: none; /* Or keep stroke if preferred, but usually fill is enough */
+  animation: pulse 2s infinite; 
+}
+
+/* Ensure selected/active pins pop out more */
+svg.map-pin-svg.spot-visited {
+  fill: var(--accent-color);
+  fill-opacity: 1;
+  stroke: var(--accent-color);
+  filter: drop-shadow(0 0 8px var(--accent-color));
+  animation: pulse 2s infinite;
+}
+
+/* Pulse Animation (ensure it works on SVG opacity or transform if needed, 
+   but existing 'pulse' uses opacity which is fine for the whole SVG) */
+
+/* Light Mode Specifics */
+body.light-mode svg.map-pin-svg {
+  stroke: #ff8c00;
+  fill: rgba(0, 0, 0, 0.1); /* Darker unvisited in light mode? Or just transparent */
+}
+
+body.light-mode svg.map-pin-svg.prefecture-visited {
+  fill: #ff8c00;
+}
+

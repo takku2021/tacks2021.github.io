@@ -176,24 +176,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Theme Toggle
+    // Theme Toggle with Okinawa Sunrise/Sunset Auto-switching
     const toggleBtn = document.getElementById('theme-toggle');
     const body = document.body;
     
-    // Check saved preference
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'light') {
-        body.classList.add('light-mode');
-        toggleBtn.textContent = '☾'; // Moon for light mode (to switch back to dark)
+    // Okinawa coordinates (Naha)
+    const OKINAWA_LAT = 26.2124;
+    const OKINAWA_LNG = 127.6809;
+    
+    // Function to determine if it's daytime in Okinawa
+    function isDaytimeInOkinawa() {
+        if (typeof SunCalc === 'undefined') {
+            // Fallback if SunCalc is not loaded
+            return true;
+        }
+        
+        const now = new Date();
+        const times = SunCalc.getTimes(now, OKINAWA_LAT, OKINAWA_LNG);
+        
+        // Check if current time is between sunrise and sunset
+        return now >= times.sunrise && now < times.sunset;
+    }
+    
+    // Function to apply theme
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            body.classList.add('light-mode');
+            toggleBtn.textContent = '☾'; // Moon for light mode
+        } else {
+            body.classList.remove('light-mode');
+            toggleBtn.textContent = '☀'; // Sun for dark mode
+        }
+    }
+    
+    // Check for manual override first, otherwise use auto-detection
+    const manualTheme = localStorage.getItem('theme');
+    const manualOverride = localStorage.getItem('themeManualOverride');
+    
+    if (manualOverride === 'true' && manualTheme) {
+        // User has manually set a preference
+        applyTheme(manualTheme);
     } else {
-        toggleBtn.textContent = '☀'; // Sun for dark mode (to switch to light)
+        // Auto-detect based on Okinawa sunrise/sunset
+        const autoTheme = isDaytimeInOkinawa() ? 'light' : 'dark';
+        applyTheme(autoTheme);
+        localStorage.setItem('theme', autoTheme);
     }
 
+    // Manual toggle button
     if (toggleBtn) {
         toggleBtn.addEventListener('click', () => {
             body.classList.toggle('light-mode');
             
-            // Save preference
+            // Save preference and mark as manual override
             let theme = 'dark';
             if (body.classList.contains('light-mode')) {
                 theme = 'light';
@@ -202,8 +237,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 toggleBtn.textContent = '☀';
             }
             localStorage.setItem('theme', theme);
+            localStorage.setItem('themeManualOverride', 'true');
         });
     }
+    
+    // Optional: Reset to auto-detection daily at midnight
+    // Check every hour if we should reset the manual override
+    setInterval(() => {
+        const now = new Date();
+        // Reset manual override at midnight (00:00-01:00)
+        if (now.getHours() === 0 && manualOverride === 'true') {
+            localStorage.removeItem('themeManualOverride');
+            const autoTheme = isDaytimeInOkinawa() ? 'light' : 'dark';
+            applyTheme(autoTheme);
+            localStorage.setItem('theme', autoTheme);
+        }
+    }, 3600000); // Check every hour
 
     // Hamburger Menu Logic
     const hamburger = document.querySelector('.hamburger');
