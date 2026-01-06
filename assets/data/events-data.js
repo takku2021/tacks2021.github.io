@@ -2,61 +2,61 @@ const EVENT_DATA = {
     visited: [
         { name: "おきけも！", prefecture: "沖縄県", location: "北谷町", type: "event", lat: 26.3165, lon: 127.7575, photos: [], description: "沖縄で唯一開催されるケモノイベント。", 
             labelConfig: {
-                offsetY: 4,
+                offsetY: 16.5,
                 direction: 'bottom',
             }},
         { name: "JMoF(Japan Meeting of Furries)", prefecture: "愛知県", location: "豊橋市", type: "convention", lat: 34.7691, lon: 137.3914, photos: [], description: "日本最大級のケモノコンベンション。",
             labelConfig: {
-                offsetY: 7,
+                offsetY: 16,
                 direction: 'bottom',
             }},
         { name: "琉大祭", prefecture: "沖縄県", location: "琉球大学", type: "school_festival", lat: 26.2527, lon: 127.7665, photos: [], description: "琉球大学の学園祭。今のところメインで参加するイベント。", 
             labelConfig: {
-                offsetY: 26,
+                offsetY: 14,
                 direction: 'top',
             }},
         { name: "紅葉祭", prefecture: "兵庫県", location: "甲子園大学", type: "school_festival", lat: 34.8065, lon: 135.3336, photos: [], description: "甲子園大学の学園祭。工房の方と交流できたりできてとても楽しかった！", 
             labelConfig: { 
                 offsetX: 6,
-                offsetY: 3,
+                offsetY: 9,
                 direction: 'bottom',
                 tailHeight: 46,
                 tailSkew: -38,
             }},
         { name: "早稲田祭", prefecture: "東京都", location: "早稲田大学", type: "school_festival", lat: 35.7095, lon: 139.7195, photos: [], description: "早稲田大学の大学祭。めっちゃ人多かった。着ぐるみも多かった。",
             labelConfig: {
-                offsetY: 8,
+                offsetY: 16,
                 direction: 'bottom',
             }},
     ],
     wishlist: [
         { name: "ちるこん", prefecture: "北海道", location: "札幌市", type: "event", lat: 43.0618, lon: 141.3545, photos: [], description: "北海道の着ぐるみオフ。",
             labelConfig: {
-                offsetY: 0.5,
+                offsetY: 17,
                 direction: 'bottom',
             }},
         { name: "OFFF(Osaka Furry Fun Festa)", prefecture: "大阪府", location: "大阪市", type: "convention", lat: 34.6360, lon: 135.4146, photos: [], description: "大阪で開催されるケモノコンベンション。",
             labelConfig: { 
                 offsetX: 14.5,
-                offsetY: 27.5,
+                offsetY: 21.5,
                 direction: 'top',
                 tailHeight: 50,
                 tailSkew: 60,
             }},
         { name: "Kemocon", prefecture: "静岡県", location: "御殿場市", type: "event", lat: 35.3087, lon: 138.9346, photos: [], description: "御殿場で開催されるコンベンション。",
             labelConfig: {
-                offsetY: 7,
+                offsetY: 16,
                 direction: 'bottom',
             }},
         { name: "Bick", prefecture: "熊本県", location: "熊本市", type: "event", lat: 32.8059, lon: 130.6918, photos: [], description: "熊本のケモノイベント。",
             labelConfig: { 
-                offsetY: 8,
+                offsetY: 16,
                 direction: 'bottom',
             }},
         { name: "ケモノすてーしょん！", prefecture: "兵庫県", location: "神戸市", type: "event", lat: 34.6849, lon: 135.1987, photos: [], description: "神戸のデザインセンターで開催。",
             labelConfig: { 
                 offsetX: -17,
-                offsetY: 4.5,
+                offsetY: 11,
                 direction: 'bottom',
                 tailHeight: 36,
                 tailSkew: 70,
@@ -64,14 +64,14 @@ const EVENT_DATA = {
         { name: "アワジール", prefecture: "兵庫県", location: "淡路島", type: "event", lat: 34.3833, lon: 134.8333, photos: [], description: "淡路島でのイベント。" ,
             labelConfig: { 
                 offsetX: -2.5,
-                offsetY: 33,
+                offsetY: 26.5,
                 tailHeight: 80,
                 direction: 'top',
                 tailSkew: -11,
             }},
         { name: "獣ヶ島", prefecture: "香川県", location: "高松市 女木島", type: "event", lat: 34.3965, lon: 134.0531, photos: [], description: "女木島（鬼ヶ島）での野外撮影イベント。",
             labelConfig: {
-                offsetY: 9.5,
+                offsetY: 16,
                 direction: 'bottom',
             }}
     ]

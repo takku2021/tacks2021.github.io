@@ -1,4 +1,7 @@
 /* Events Page Specific Styles */
+/* * {
+  outline: 1px solid red !important;
+} */
 
 #events-map {
   min-height: 100vh;
@@ -576,135 +579,162 @@ body.light-mode .label-text:hover {
   fill: #ff8c00;
 }
 
-/* Map Speech Bubble - Adapted from style.css .speech-bubble */
+/* Restored CSS Speech Bubble (Rabbit Style) */
 .map-speech-bubble {
-  position: relative; /* Static/Relative inside foreignObject */
-  /* Copied styles */
-  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  /* Centering logic within the foreignObject (which is centered on point) */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Default center */
+  
+  /* Visual Style (Matches Rabbit) */
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark */
   color: #ffffff;
   border: 2px solid var(--accent-color);
   padding: 0.8rem 1.2rem;
   border-radius: 8px;
   font-family: var(--font-code);
   font-size: 0.95rem;
-  min-width: max-content; /* Ensure text fits */
-  max-width: 300px;
+  min-width: max-content;
+  max-width: 250px;
   text-align: center;
-  white-space: nowrap; /* Keep single line usually */
+  white-space: nowrap;
   
-  /* Map interaction overrides */
-  pointer-events: auto;
   cursor: pointer;
-  z-index: 10;
-  
-  /* Remove old override */
-  overflow: visible;
-  box-shadow: none; /* style.css has no shadow */
-}
-
-.map-speech-bubble:hover {
-  /* Mimic simple hover if any, style.css doesn't have specific hover for bubble itself except position on Rabbit image hover? */
-  /* Adding simple highlight for good UI */
-  background: rgba(0, 0, 0, 0.7);
-  transform: translateY(-2px);
   transition: all 0.2s;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3); /* Add subtle shadow for depth */
 }
 
-/* Arrow Styles - Solid Triangles (Customizable via CSS Vars) */
-/* Defaults: Height (Length) 8px, Width 16px (Half 8px) */
+/* Hover Effect */
+.map-speech-bubble:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: translate(-50%, -50%) scale(1.05); /* Grow slightly from center */
+  box-shadow: 0 0 15px var(--accent-color);
+  z-index: 100;
+}
+
+/* Arrow Base */
 .map-speech-bubble::after {
   content: '';
   position: absolute;
-  border-style: solid;
-  border-color: transparent;
+  border: 8px solid transparent;
   pointer-events: none;
   
-  /* Use vars if defined, else fallback to 8px */
-  --th: var(--fo-tail-height, 8px);
-  --tw: var(--fo-tail-half-width, 8px);
-  --tsk: var(--fo-tail-skew, 0deg);
+  /* Custom Tail Transforms */
+  /* We use transform-origin to ensure it skews from the base attached to the bubble */
+  transform-origin: center;
+  transition: transform 0.3s;
 }
 
-/* Default (Bottom Tail) -> Arrow on BOTTOM pointing DOWN */
-.map-speech-bubble::after, .map-speech-bubble.tail-bottom::after {
+/* Custom Tail Sizing Support */
+/* Note: Border triangles use border-width to control size. */
+/* default is 8px. */
+/* We can use calcs if vars are present. fallback to 8px. */
+/* Actually, simpler to just apply transforms for skew. */
+
+/* Tail Bottom (Default) -> Arrow Points Down */
+.map-speech-bubble.tail-bottom {
+  transform: translate(-50%, -100%); /* Shift up so bottom is at anchor */
+  margin-top: -10px; /* Offset for tail */
+}
+.map-speech-bubble.tail-bottom::after {
   top: 100%;
-  left: 50%; 
-  margin-left: calc(var(--tw) * -1);
-  border-width: var(--th) var(--tw) 0 var(--tw); /* Top Right Bottom Left */
+  left: 50%;
+  margin-left: -8px; 
+  /* Support Custom Width/Height if needed, but Skew is priority */
+  /* Skew X for horizontal slant */
+  transform: skewX(var(--fo-tail-skew, 0deg));
+  transform-origin: top center;
   border-top-color: var(--accent-color);
   
-  /* Skew logic for vertical tail */
-  transform: skewX(var(--tsk));
-  transform-origin: top center; /* Keep base attached */
+  /* If custom height is set, we need to adjust border-width */
+  /* border-width: [top] [right] [bottom] [left] */
+  /* For bottom tail, only top border is visible color. Height = border-top-width. Width = left+right. */
+  border-width: var(--fo-tail-height, 8px) var(--fo-tail-half-width, 8px) 0 var(--fo-tail-half-width, 8px);
+  margin-left: calc(var(--fo-tail-half-width, 8px) * -1);
 }
 
-/* Tail Top (Bubble Below Dot) -> Arrow on TOP pointing UP */
+/* Tail Top -> Arrow Points Up */
+.map-speech-bubble.tail-top {
+  transform: translate(-50%, 0%); /* Shift down so top is at anchor */
+  margin-top: 10px;
+}
 .map-speech-bubble.tail-top::after {
-  top: auto;
   bottom: 100%;
   left: 50%;
-  margin-left: calc(var(--tw) * -1);
-  border-width: 0 var(--tw) var(--th) var(--tw);
+  /* Skew X for horizontal slant */
+  transform: skewX(var(--fo-tail-skew, 0deg));
+  transform-origin: bottom center;
   border-bottom-color: var(--accent-color);
   
-  transform: skewX(var(--tsk));
-  transform-origin: bottom center;
+  border-width: 0 var(--fo-tail-half-width, 8px) var(--fo-tail-height, 8px) var(--fo-tail-half-width, 8px);
+  margin-left: calc(var(--fo-tail-half-width, 8px) * -1);
 }
 
-/* Tail Left (Bubble Right of Dot) -> Arrow on LEFT pointing LEFT */
+/* Tail Left -> Arrow Points Left */
+.map-speech-bubble.tail-left {
+  transform: translate(0%, -50%); /* Shift right so left is at anchor */
+  margin-left: 10px;
+}
 .map-speech-bubble.tail-left::after {
-  top: 50%;
-  left: auto;
   right: 100%;
-  margin-left: 0;
-  margin-top: calc(var(--tw) * -1);
-  border-width: var(--tw) var(--th) var(--tw) 0; /* Right is Length */
+  top: 50%;
+  /* Skew Y for vertical slant */
+  transform: skewY(var(--fo-tail-skew, 0deg));
+  transform-origin: center right;
   border-right-color: var(--accent-color);
   
-  /* Skew logic for horizontal tail */
-  transform: skewY(var(--tsk));
-  transform-origin: right center;
+  border-width: var(--fo-tail-half-width, 8px) var(--fo-tail-height, 8px) var(--fo-tail-half-width, 8px) 0;
+  margin-top: calc(var(--fo-tail-half-width, 8px) * -1);
 }
 
-/* Tail Right (Bubble Left of Dot) -> Arrow on RIGHT pointing RIGHT */
+/* Tail Right -> Arrow Points Right */
+.map-speech-bubble.tail-right {
+  transform: translate(-100%, -50%); /* Shift left so right is at anchor */
+  margin-left: -10px;
+}
 .map-speech-bubble.tail-right::after {
-  top: 50%;
   left: 100%;
-  right: auto;
-  margin-left: 0;
-  margin-top: calc(var(--tw) * -1);
-  border-width: var(--tw) 0 var(--tw) var(--th); /* Left is Length */
+  top: 50%;
+  /* Skew Y for vertical slant */
+  transform: skewY(var(--fo-tail-skew, 0deg));
+  transform-origin: center left;
   border-left-color: var(--accent-color);
   
-  transform: skewY(var(--tsk));
-  transform-origin: left center;
+  border-width: var(--fo-tail-half-width, 8px) 0 var(--fo-tail-half-width, 8px) var(--fo-tail-height, 8px);
+  margin-top: calc(var(--fo-tail-half-width, 8px) * -1);
 }
 
-/* Remove ::before styles completely */
-.map-speech-bubble::before,
-.map-speech-bubble.tail-top::before,
-.map-speech-bubble.tail-left::before,
-.map-speech-bubble.tail-right::before {
-  content: none;
-  display: none;
+.map-speech-bubble {
+  --bubble-color: var(--accent-color); /* Default */
+  border-color: var(--bubble-color);
 }
 
-/* Light Mode Overrides */
-/* style.css defines variables, so colors update automatically. 
-   But specific light mode overrides might be needed if contrast is bad. */
-body.light-mode .map-speech-bubble {
-  /* style.css doesn't have .speech-bubble overrides for light mode inside the block I saw,
-     but it uses var(--card-bg) etc? No, it uses hardcoded rgba(0,0,0,0.5).
-     The user might want it to stay dark always (like the rabbit)? 
-     User said "copy exactly". Rabbit bubble is dark even in light mode? */
-  /* I will trust variables for accent, but background is hardcoded in style.css */
+/* Now apply var to arrows */
+.map-speech-bubble.tail-bottom::after { border-top-color: var(--bubble-color); }
+.map-speech-bubble.tail-top::after    { border-bottom-color: var(--bubble-color); }
+.map-speech-bubble.tail-left::after   { border-right-color: var(--bubble-color); }
+.map-speech-bubble.tail-right::after  { border-left-color: var(--bubble-color); }
+
+/* Hover Glow uses same color */
+.map-speech-bubble:hover {
+  box-shadow: 0 0 15px var(--bubble-color);
 }
 
-/* Force accent color update for light mode if variables handle it (they do) */
+/* Visited Status */
+.map-speech-bubble.spot-visited {
+  background: var(--bubble-color); /* Fill with color */
+  color: #000; /* Contrast text? Or white with shadow? */
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  /* Make semi-transparent fill to keep map visible? */
+  background: color-mix(in srgb, var(--bubble-color), transparent 20%);
+}
 
-
-/* Regional font size overrides for speech bubbles - REMOVED */
-/* Scaling is now handled via SVG transform in japan-map.js */
+.map-speech-bubble.spot-wishlist {
+  /* Removed gold override to use region color */
+  border-style: solid;
+}
 
 /* Map Pin Icon Styling (Vector) */
 svg.map-pin-svg {
