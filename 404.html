@@ -5,8 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 Not Found - yu-ki =:)</title>
     <meta name="description" content="Page not found.">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <style>
+    <script>
+        (function() {
+            // Dynamically set base href
+            var baseHref = '/'; // Default for localhost
+            if (window.location.hostname.includes('github.io')) {
+                // Extract repository name from path for GitHub Pages
+                // Example: /takku2021-website/foo/bar -> /takku2021-website/
+                var pathSegments = window.location.pathname.split('/');
+                if (pathSegments.length > 1 && pathSegments[1]) {
+                    baseHref = '/' + pathSegments[1] + '/';
+                }
+            }
+            document.write('<base href="' + baseHref + '">');
+        })();
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
         /* 404 Specific Styles */
         /*
         * {
@@ -121,14 +135,14 @@
     <!-- Navigation -->
     <header>
         <div class="logo">
-            <a href="/home/">
-                <img src="/assets/img/running.gif" alt="yu-ki =:)" class="logo-img">
+            <a href="home/">
+                <img src="assets/img/running.gif" alt="yu-ki =:)" class="logo-img">
             </a>
         </div>
         <nav class="nav-menu">
             <ul>
-                <li><a href="/home/">Home</a></li>
-                <li><a href="/events/">Events</a></li>
+                <li><a href="home/">Home</a></li>
+                <li><a href="Events/">Events</a></li>
             </ul>
         </nav>
         <button id="theme-toggle" aria-label="Toggle Dark/Light Mode">☀</button>
