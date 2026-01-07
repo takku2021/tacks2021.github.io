@@ -38,7 +38,6 @@
 
 .prefecture:hover {
   fill: var(--accent-color);
-  r: 3px; /* Reduced from 5 to prevent excessive zoom effect */
   filter: drop-shadow(0 0 8px var(--accent-color));
 }
 
@@ -218,14 +217,33 @@ body.light-mode .event-desc {
 /* Responsive */
 @media (max-width: 768px) {
   .map-container {
-    padding: 1rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
   }
   
   .map-legend {
-    flex-direction: column;
-    gap: 1rem;
+    position: static; /* Remove absolute positioning */
+    order: 2; /* Ensure it comes after map */
+    margin-top: 1rem;
+    width: 100%;
+    max-width: none;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+    flex-direction: row; /* Keep items side-by-side or wrap if needed */
+    flex-wrap: wrap; /* Allow wrapping if too narrow */
+    justify-content: center;
   }
-  
+
+  .legend-item {
+      font-size: 0.8rem;
+  }
+
+  /* Reset map order */
+  #japan-map {
+      order: 1;
+  }
+    
   .events-list h2 {
     font-size: 1.5rem;
   }
@@ -747,7 +765,6 @@ svg.map-pin-svg {
 
 svg.map-pin-svg:hover {
   fill: var(--accent-color);
-  transform: scale(1.3) translateY(-2px);
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
 }
 
